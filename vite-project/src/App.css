@@ -254,7 +254,7 @@
   margin: 0;
   font-family: var(--sans);
   font-weight: 400;
-  font-size: clamp(7rem, 31vw, 24rem);
+  font-size: clamp(7rem, min(31vw, 34vh), 22rem);
   line-height: 0.82;
   letter-spacing: -0.06em;
   white-space: nowrap;
@@ -288,6 +288,38 @@
   to {
     background-position: calc(var(--bp) + 400%) 0;
   }
+}
+
+.declare-and {
+  margin: 0.4rem 0 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  line-height: 1;
+}
+
+.and-pre {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.6rem, 4.6vw, 3.4rem);
+  color: var(--rose-600);
+}
+
+.bottom-word {
+  white-space: nowrap;
+  font-size: clamp(3.4rem, 12vw, 9rem);
+  letter-spacing: -0.045em;
+}
+
+.slam-solid {
+  display: inline-block;
+  color: var(--rose-600);
+  opacity: 0;
+  transform: scale(2.6) translateY(-10%);
+  filter: blur(14px);
+  animation: slam 0.6s cubic-bezier(0.2, 0.9, 0.25, 1.15) forwards;
 }
 
 .declare-post {
@@ -691,6 +723,43 @@
   background: rgba(255, 255, 255, 0.6);
   color: var(--rose-600);
   padding: 0.85rem 1.3rem;
+}
+
+/* ============ continue gate ============ */
+
+.app.is-waiting {
+  cursor: progress;
+}
+
+.continue {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 64px;
+  transform: translateX(-50%);
+  font-family: var(--hand);
+  font-size: 1.5rem;
+  white-space: nowrap;
+  pointer-events: none;
+  color: #8d8389;
+  animation:
+    fadeIn 0.8s ease both,
+    breathe 2.4s ease-in-out 0.8s infinite;
+}
+
+.app.colored .continue {
+  color: var(--rose-600);
+}
+
+.continue span {
+  display: inline-block;
+  animation: nudge 1.2s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  50% {
+    transform: translateX(5px);
+  }
 }
 
 /* ============ HUD ============ */

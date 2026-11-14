@@ -7,6 +7,8 @@ import railingPhoto from './assets/photos/railing.jpg'
 const SCENES = 8
 // the heart beats faster as the confession gets closer, then calms down
 const BEAT_MS = [1050, 950, 720, 680, 760, 640, 520, 860]
+// how long each page needs before every word / photo on it has fully appeared
+const READY_MS = [3000, 3100, 5400, 6200, 4400, 3200, 4700, 0]
 
 /* ---------- heartbeat (Web Audio, synthesized) ---------- */
 function useHeartbeat(on, interval) {
@@ -177,7 +179,6 @@ function SceneIntro() {
       <p className="whisper">
         <Words text="There is something I have been hiding from all of you for a very long time." step={0.12} />
       </p>
-      <p className="hint fade-late">tap anywhere, slowly</p>
     </div>
   )
 }
@@ -202,10 +203,10 @@ function SceneName() {
 
 const MARQUEE = [
   'RAHUL BHATT IS GAY ♥ ',
-  'I AM GAY ♥ I AM PROUD ♥ ',
+  'I AM GAY ♥ I AM A BOTTOM ♥ ',
   'OUT LOUD ♥ NO MORE HIDING ♥ ',
   'RAHUL BHATT IS GAY ♥ ',
-  'I AM GAY ♥ I AM PROUD ♥ ',
+  'I AM A BOTTOM ♥ I AM PROUD ♥ ',
 ]
 
 function Marquee() {
@@ -239,7 +240,19 @@ function SceneGay() {
           </span>
         ))}
       </h1>
-      <p className="declare-post fade-later">
+      <p className="declare-and" aria-label="and I am a bottom.">
+        <span className="word and-pre" style={{ animationDelay: '2.6s' }}>
+          and I am a&nbsp;
+        </span>
+        <span className="bottom-word">
+          {'BOTTOM.'.split('').map((c, i) => (
+            <span key={i} className="slam-solid" style={{ animationDelay: `${2.9 + i * 0.09}s` }}>
+              {c}
+            </span>
+          ))}
+        </span>
+      </p>
+      <p className="declare-post" style={{ animation: 'fadeIn 1.2s ease 4.1s both' }}>
         Loudly. Proudly. To the whole world.
         <br />
         For the very first time.
@@ -395,16 +408,22 @@ export default function App() {
   const [started, setStarted] = useState(false)
   const [sound, setSound] = useState(true)
   const [bloom, setBloom] = useState(null) // {x,y}
-  const lock = useRef(false)
+  const [ready, setReady] = useState(false)
 
   const colored = scene >= 2
+  const isLast = scene >= SCENES - 1
   useHeartbeat(started && sound, BEAT_MS[scene])
+
+  // a page only unlocks once everything on it has finished appearing
+  useEffect(() => {
+    const id = setTimeout(() => setReady(true), READY_MS[scene])
+    return () => clearTimeout(id)
+  }, [scene])
 
   const next = useCallback(
     (x, y) => {
-      if (lock.current || scene >= SCENES - 1) return
-      lock.current = true
-      setTimeout(() => (lock.current = false), 900)
+      if (!ready || scene >= SCENES - 1) return
+      setReady(false)
       setStarted(true)
       if (scene === 1) {
         const px = x ?? window.innerWidth / 2
@@ -414,16 +433,15 @@ export default function App() {
       }
       setScene((s) => s + 1)
     },
-    [scene],
+    [scene, ready],
   )
 
   const prev = useCallback(() => {
-    setScene((s) => {
-      const n = Math.max(0, s - 1)
-      if (n < 2) setBloom(null)
-      return n
-    })
-  }, [])
+    if (scene === 0) return
+    setReady(false)
+    if (scene - 1 < 2) setBloom(null)
+    setScene(scene - 1)
+  }, [scene])
 
   useEffect(() => {
     const onKey = (e) => {
@@ -440,12 +458,13 @@ export default function App() {
   const restart = (e) => {
     e.stopPropagation()
     setBloom(null)
+    setReady(false)
     setScene(0)
   }
 
   return (
     <div
-      className={`app ${colored ? 'colored' : 'mono'}`}
+      className={`app ${colored ? 'colored' : 'mono'} ${ready && !isLast ? 'is-ready' : 'is-waiting'}`}
       onClick={(e) => next(e.clientX, e.clientY)}
       style={{ '--beat': `${BEAT_MS[scene]}ms` }}
     >
@@ -465,6 +484,12 @@ export default function App() {
         {scene === 6 && <SceneLove />}
         {scene === 7 && <SceneWorld onRestart={restart} />}
       </main>
+
+      {ready && !isLast && (
+        <div className="continue" key={`c${scene}`} aria-live="polite">
+          tap to continue <span>→</span>
+        </div>
+      )}
 
       <div className="hud" onClick={(e) => e.stopPropagation()}>
         <Heart className="beat-heart" />
