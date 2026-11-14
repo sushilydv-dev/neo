@@ -4,9 +4,9 @@ import windowPhoto from './assets/photos/window.jpg'
 import smilePhoto from './assets/photos/smile.jpg'
 import railingPhoto from './assets/photos/railing.jpg'
 
-const SCENES = 7
+const SCENES = 8
 // the heart beats faster as the confession gets closer, then calms down
-const BEAT_MS = [1050, 950, 800, 760, 640, 520, 860]
+const BEAT_MS = [1050, 950, 720, 680, 760, 640, 520, 860]
 
 /* ---------- heartbeat (Web Audio, synthesized) ---------- */
 function useHeartbeat(on, interval) {
@@ -200,9 +200,31 @@ function SceneName() {
   )
 }
 
+const MARQUEE = [
+  'RAHUL BHATT IS GAY ♥ ',
+  'I AM GAY ♥ I AM PROUD ♥ ',
+  'OUT LOUD ♥ NO MORE HIDING ♥ ',
+  'RAHUL BHATT IS GAY ♥ ',
+  'I AM GAY ♥ I AM PROUD ♥ ',
+]
+
+function Marquee() {
+  return (
+    <div className="marquee" aria-hidden="true">
+      {MARQUEE.map((t, i) => (
+        <div key={i} className={`marquee-row ${i % 2 ? 'rev' : ''}`} style={{ '--d': `${i * 0.25}s` }}>
+          <span>{t.repeat(6)}</span>
+          <span>{t.repeat(6)}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function SceneGay() {
   return (
     <div className="scene center declare">
+      <Marquee />
       <p className="declare-pre">
         <Words text="I am" delay={0.6} step={0.25} />
       </p>
@@ -221,6 +243,35 @@ function SceneGay() {
         Loudly. Proudly. To the whole world.
         <br />
         For the very first time.
+      </p>
+    </div>
+  )
+}
+
+const TRUTHS = [
+  { text: 'I am gay.', cls: '' },
+  { text: 'I am a bottom.', cls: '' },
+  { text: 'There is only one boy I ever want to kiss.', cls: 'soft' },
+  { text: 'He is my love.', cls: 'love' },
+]
+
+function SceneTruths() {
+  return (
+    <div className="scene center truths">
+      <p className="truths-pre">
+        <Words text="So let me say all of it, clearly:" />
+      </p>
+      <ul className="truth-list">
+        {TRUTHS.map((t, i) => (
+          <li key={t.text} className={`truth ${t.cls}`} style={{ animationDelay: `${0.9 + i * 0.85}s` }}>
+            {t.text}
+          </li>
+        ))}
+      </ul>
+      <p className="forever" style={{ animationDelay: `${0.9 + TRUTHS.length * 0.85 + 0.4}s` }}>
+        And I want to spend the rest of my life
+        <br />
+        <em>with him. Only him.</em>
       </p>
     </div>
   )
@@ -281,7 +332,11 @@ function SceneLove() {
           I love him.
         </text>
       </svg>
-      <p className="after fade-later">And I&rsquo;m done being afraid of it.</p>
+      <p className="after fade-later">
+        The only boy I ever want to kiss. The one I want forever.
+        <br />
+        And I&rsquo;m done being afraid of it.
+      </p>
     </div>
   )
 }
@@ -314,7 +369,9 @@ function SceneWorld({ onRestart }) {
         <p className="signature">
           This is me. Rahul Bhatt.
           <br />
-          <strong className="proud">I am gay</strong>, I am in love, and I am not hiding anymore.
+          <strong className="proud">I am gay</strong>, I am a bottom, and I am in love with one boy.
+          <br />
+          I want my whole life with him, and I am not hiding anymore.
         </p>
         <span className="pride" aria-hidden="true" />
         <div className="actions">
@@ -402,10 +459,11 @@ export default function App() {
         {scene === 0 && <SceneIntro />}
         {scene === 1 && <SceneName />}
         {scene === 2 && <SceneGay />}
-        {scene === 3 && <SceneYears />}
-        {scene === 4 && <SceneShy />}
-        {scene === 5 && <SceneLove />}
-        {scene === 6 && <SceneWorld onRestart={restart} />}
+        {scene === 3 && <SceneTruths />}
+        {scene === 4 && <SceneYears />}
+        {scene === 5 && <SceneShy />}
+        {scene === 6 && <SceneLove />}
+        {scene === 7 && <SceneWorld onRestart={restart} />}
       </main>
 
       <div className="hud" onClick={(e) => e.stopPropagation()}>
