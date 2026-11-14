@@ -1,0 +1,77 @@
+@font-face {
+  font-family: 'Absans';
+  src: url('./assets/fonts/Absans-Regular.woff2') format('woff2'),
+    url('./assets/fonts/Absans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --blush-50: #fff6f9;
+  --blush-100: #ffe9f1;
+  --blush-200: #ffd3e3;
+  --blush-300: #ffb0cb;
+  --rose-400: #f77fa8;
+  --rose-500: #e8578b;
+  --rose-600: #c93a6f;
+  --rose-800: #7a1f45;
+  --ink: #3d1229;
+  --ink-soft: #7b4a62;
+
+  --sans: 'Absans', system-ui, sans-serif;
+  --serif: 'Fraunces', Georgia, serif;
+  --hand: 'Caveat', cursive;
+
+  font: 18px/1.65 var(--sans);
+  color: var(--ink);
+  background: var(--blush-50);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #121013;
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--rose-400);
+  color: white;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+@media (max-width: 720px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
