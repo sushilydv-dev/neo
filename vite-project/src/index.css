@@ -8,16 +8,27 @@
 }
 
 :root {
-  --blush-50: #fff6f9;
-  --blush-100: #ffe9f1;
-  --blush-200: #ffd3e3;
-  --blush-300: #ffb0cb;
-  --rose-400: #f77fa8;
-  --rose-500: #e8578b;
-  --rose-600: #c93a6f;
-  --rose-800: #7a1f45;
-  --ink: #3d1229;
-  --ink-soft: #7b4a62;
+  /* pride flag */
+  --p-red: #e40303;
+  --p-orange: #ff8c00;
+  --p-yellow: #f2b600;
+  --p-green: #008026;
+  --p-blue: #24408e;
+  --p-violet: #732982;
+  --rainbow: linear-gradient(90deg, #e40303, #ff8c00, #f2b600, #008026, #24408e, #732982);
+  --rainbow-loop: linear-gradient(90deg, #e40303, #ff8c00, #f2b600, #008026, #24408e, #732982, #e40303);
+
+  /* neutrals / accents (names kept from the earlier palette) */
+  --blush-50: #fbf8ff;
+  --blush-100: #f4effb;
+  --blush-200: #e6ddf1;
+  --blush-300: #d3c4e6;
+  --rose-400: #a46bc0;
+  --rose-500: #732982;
+  --rose-600: #4f1d6b;
+  --rose-800: #2a1240;
+  --ink: #1f1430;
+  --ink-soft: #54476a;
 
   --sans: 'Absans', system-ui, sans-serif;
   --serif: 'Fraunces', Georgia, serif;

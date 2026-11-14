@@ -879,3 +879,217 @@
     width: min(300px, 100%);
   }
 }
+
+/* =====================================================
+   RAINBOW / PRIDE THEME
+   ===================================================== */
+
+/* the colour that floods in is now a soft, slowly moving rainbow */
+.bloom {
+  background:
+    radial-gradient(1200px 800px at 50% 50%, rgba(255, 255, 255, 0.55), transparent 70%),
+    linear-gradient(120deg, #ffd0d0, #ffe2c2, #fff3b5, #d2f2d4, #cfe0ff, #e4d2ff, #ffd0e6, #ffd0d0);
+  background-size: 100% 100%, 400% 400%;
+  animation: rainbowDrift 24s ease-in-out infinite alternate;
+}
+
+@keyframes rainbowDrift {
+  from {
+    background-position: 0 0, 0% 50%;
+  }
+  to {
+    background-position: 0 0, 100% 50%;
+  }
+}
+
+/* rainbow text helper */
+.counter-num,
+.truth.love,
+.always em,
+.forever em,
+.declare-pre,
+.and-pre,
+.truths-pre,
+.counter-label {
+  background: var(--rainbow-loop);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation-name: wordIn, letterShimmerSimple;
+}
+
+.counter-num,
+.always em,
+.forever em,
+.truth.love {
+  padding: 0 0.08em;
+  animation: letterShimmerSimple 8s linear infinite;
+}
+
+.truth.love {
+  animation:
+    slam 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.15) forwards,
+    letterShimmerSimple 8s linear infinite;
+}
+
+.declare-pre,
+.and-pre,
+.truths-pre,
+.counter-label {
+  animation: none;
+}
+
+.and-pre {
+  opacity: 0;
+  animation: wordIn 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 2.6s forwards;
+}
+
+@keyframes letterShimmerSimple {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+/* BOTTOM. letters in rainbow too */
+.slam-solid {
+  background: var(--rainbow-loop);
+  background-size: 700% 100%;
+  background-position: var(--bp) 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation:
+    slam 0.6s cubic-bezier(0.2, 0.9, 0.25, 1.15) forwards,
+    letterShimmer 7s linear infinite;
+}
+
+/* banners: one flag colour per row */
+.marquee-row:nth-child(1) { -webkit-text-stroke-color: rgba(228, 3, 3, 0.28); }
+.marquee-row:nth-child(2) { color: rgba(255, 140, 0, 0.16); }
+.marquee-row:nth-child(3) { -webkit-text-stroke-color: rgba(0, 128, 38, 0.28); }
+.marquee-row:nth-child(4) { color: rgba(36, 64, 142, 0.13); }
+.marquee-row:nth-child(5) { -webkit-text-stroke-color: rgba(115, 41, 130, 0.3); }
+
+/* floating hearts cycle through the flag */
+.petal:nth-child(6n + 1) { fill: var(--p-red); }
+.petal:nth-child(6n + 2) { fill: var(--p-orange); }
+.petal:nth-child(6n + 3) { fill: var(--p-yellow); }
+.petal:nth-child(6n + 4) { fill: var(--p-green); }
+.petal:nth-child(6n + 5) { fill: var(--p-blue); }
+.petal:nth-child(6n + 6) { fill: var(--p-violet); }
+
+/* memory chips */
+.memory {
+  background: rgba(255, 255, 255, 0.7);
+  border-width: 2px;
+}
+.memory:nth-child(1) { border-color: var(--p-red); color: var(--p-red); }
+.memory:nth-child(2) { border-color: var(--p-green); color: var(--p-green); }
+.memory:nth-child(3) { border-color: var(--p-violet); color: var(--p-violet); }
+
+/* shy words blush in different colours */
+.shy-wrap:nth-child(6n + 1) .shy.blush { color: var(--p-red); }
+.shy-wrap:nth-child(6n + 2) .shy.blush { color: var(--p-orange); }
+.shy-wrap:nth-child(6n + 3) .shy.blush { color: var(--p-yellow); }
+.shy-wrap:nth-child(6n + 4) .shy.blush { color: var(--p-green); }
+.shy-wrap:nth-child(6n + 5) .shy.blush { color: var(--p-blue); }
+.shy-wrap:nth-child(6n + 6) .shy.blush { color: var(--p-violet); }
+
+/* rainbow rings around photos */
+.bubble-photo,
+.trio img {
+  border-color: transparent;
+  background: var(--rainbow) border-box;
+}
+
+.bubble-photo {
+  border-width: 7px;
+  box-shadow: 0 30px 70px -25px rgba(115, 41, 130, 0.5);
+}
+
+.bubble-photo img {
+  border-radius: 50%;
+}
+
+.trio img {
+  box-shadow: 0 10px 24px -10px rgba(31, 20, 48, 0.45);
+}
+
+/* "I love him." in rainbow ink */
+.ily text {
+  stroke: url(#ilyRainbow);
+  fill: url(#ilyRainbow);
+  fill-opacity: 0;
+  animation:
+    draw 3s cubic-bezier(0.5, 0, 0.3, 1) 0.9s forwards,
+    fillOpacity 1.2s ease 3.4s forwards,
+    glowRainbow 2.4s ease-in-out 4.6s infinite;
+}
+
+@keyframes fillOpacity {
+  to {
+    fill-opacity: 1;
+  }
+}
+
+@keyframes glowRainbow {
+  50% {
+    filter: drop-shadow(0 0 16px rgba(115, 41, 130, 0.45));
+  }
+}
+
+.forever em {
+  animation:
+    letterShimmerSimple 8s linear infinite,
+    glowRainbow 2.4s ease-in-out 7s infinite;
+}
+
+/* buttons */
+.send-love {
+  background: var(--rainbow-loop);
+  background-size: 200% 100%;
+  animation: letterShimmerSimple 6s linear infinite;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 14px 30px -12px rgba(115, 41, 130, 0.7);
+}
+
+.restart {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    var(--rainbow) border-box;
+  color: var(--ink);
+}
+
+/* HUD */
+.app.colored .beat-heart {
+  fill: var(--p-red);
+  animation:
+    beat var(--beat) ease-in-out infinite,
+    hueSpin 6s linear infinite;
+}
+
+@keyframes hueSpin {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.app.colored .progress span.on:nth-child(8n + 1) { background: var(--p-red); }
+.app.colored .progress span.on:nth-child(8n + 2) { background: var(--p-orange); }
+.app.colored .progress span.on:nth-child(8n + 3) { background: var(--p-yellow); }
+.app.colored .progress span.on:nth-child(8n + 4) { background: var(--p-green); }
+.app.colored .progress span.on:nth-child(8n + 5) { background: #1f8fff; }
+.app.colored .progress span.on:nth-child(8n + 6) { background: var(--p-blue); }
+.app.colored .progress span.on:nth-child(8n + 7) { background: var(--p-violet); }
+.app.colored .progress span.on:nth-child(8n + 8) { background: #e8578b; }
+
+.app.colored .continue,
+.app.colored .sound {
+  color: var(--ink);
+}
+
+.burst {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}

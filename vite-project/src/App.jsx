@@ -96,11 +96,14 @@ function Petals({ count = 22 }) {
   )
 }
 
+const PRIDE = ['#e40303', '#ff8c00', '#f2b600', '#008026', '#24408e', '#732982']
+
 function burst(x, y, n = 14, spread = 140) {
   for (let i = 0; i < n; i++) {
     const s = document.createElement('span')
     s.className = 'burst'
     s.textContent = '♥'
+    s.style.color = PRIDE[i % PRIDE.length]
     const a = Math.random() * Math.PI * 2
     const d = spread * (0.4 + Math.random() * 0.6)
     s.style.left = `${x}px`
@@ -246,7 +249,11 @@ function SceneGay() {
         </span>
         <span className="bottom-word">
           {'BOTTOM.'.split('').map((c, i) => (
-            <span key={i} className="slam-solid" style={{ animationDelay: `${2.9 + i * 0.09}s` }}>
+            <span
+              key={i}
+              className="slam-solid"
+              style={{ animationDelay: `${2.9 + i * 0.09}s, 3.6s`, '--bp': `${i * 16}%` }}
+            >
               {c}
             </span>
           ))}
@@ -341,6 +348,13 @@ function SceneLove() {
         <Words text="I have never said these words before:" />
       </p>
       <svg className="ily" viewBox="0 0 900 260" role="img" aria-label="I love him.">
+        <defs>
+          <linearGradient id="ilyRainbow" x1="0" x2="1" y1="0" y2="0">
+            {PRIDE.map((c, i) => (
+              <stop key={c} offset={`${(i / (PRIDE.length - 1)) * 100}%`} stopColor={c} />
+            ))}
+          </linearGradient>
+        </defs>
         <text x="50%" y="62%" textAnchor="middle">
           I love him.
         </text>
